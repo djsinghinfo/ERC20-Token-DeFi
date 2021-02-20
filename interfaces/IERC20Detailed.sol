@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: agpl-3.0
+// SPDX-License-Identifier: MIT
 pragma solidity 0.6.10;
 
 import {IERC20} from "./IERC20.sol";
