@@ -37,7 +37,7 @@ contract LendToPxldMigrator is VersionedInitializable {
     constructor(IERC20 pxld, IERC20 lend, uint256 lendPxldRatio) public {
         PXLD = pxld;
         LEND = lend;
-        LEND_pxld_RATIO = lendPxldRatio;
+        LEND_PXLD_RATIO = lendPxldRatio;
     }
 
     /**
