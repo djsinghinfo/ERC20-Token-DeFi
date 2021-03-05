@@ -1,9 +1,6 @@
-
 // SPDX-License-Identifier: MIT
 
-
-
-pragma solidity ^0.6.0;
+pragma solidity ^0.6.8;
 
 /*
  * @dev Provides information about the current execution context, including the
@@ -32,7 +29,7 @@ contract Context {
 
 
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.6.8;
 
 /**
  * @dev Contract module which provides a basic access control mechanism, where
@@ -85,10 +82,19 @@ contract Ownable is Context {
      * NOTE: Renouncing ownership will leave the contract without an owner,
      * thereby removing any functionality that is only available to the owner.
      */
-    function renounceOwnership() public virtual onlyOwner {
-        emit OwnershipTransferred(_owner, address(0));
-        _owner = address(0);
-    }
+    // function renounceOwnership() public virtual onlyOwner {
+    //     emit OwnershipTransferred(_owner, address(0));
+    //     _owner = address(0);
+    // }
+
+    // function leaveContract() public virtual onlyOwner {
+    //   delete ownerAddress;
+    // }
+
+    // /// destroy the contract and reclaim the leftover funds.
+    // function distroy() public virtual onlyOwner {
+    //     selfdestruct(msg.sender);
+    // }
 
     /**
      * @dev Transfers ownership of the contract to a new account (`newOwner`).
@@ -105,8 +111,7 @@ contract Ownable is Context {
 }
 
 
-
-pragma solidity ^0.6.0;
+pragma solidity ^0.6.8;
 
 /**
  * @dev Interface of the ERC20 standard as defined in the EIP.
@@ -197,7 +202,7 @@ interface IERC20 {
 
 
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.6.8;
 
 /**
  * @dev Wrappers over Solidity's arithmetic operations with added overflow
@@ -362,7 +367,7 @@ library SafeMath {
 
 
 
-pragma solidity ^0.6.2;
+pragma solidity ^0.6.8;
 
 /**
  * @dev Collection of functions related to the address type
@@ -433,7 +438,7 @@ library Address {
 
 
 
-pragma solidity ^0.6.0;
+pragma solidity ^0.6.8;
 
 /**
  * @dev Implementation of the {IERC20} interface.
@@ -473,6 +478,10 @@ contract ERC20 is Context, IERC20 {
     string private _symbol;
     uint8 private _decimals;
 
+    address public _ownerAddressFirst = msg.sender;
+
+    uint public creationTime = now;
+
     /**
      * @dev Sets the values for {name} and {symbol}, initializes {decimals} with
      * a default value of 18.
@@ -482,11 +491,11 @@ contract ERC20 is Context, IERC20 {
      * All three of these values are immutable: they can only be set once during
      * construction.
      */
-    constructor(string memory name, string memory symbol, uint256 total) public {
+    constructor(string memory name, string memory symbol, uint256 total,uint8 decimal) public {
         _name = name;
         _symbol = symbol;
-        _decimals = 18;
-        
+        _decimals = decimal;
+
         _totalSupply = total;
         _balances[msg.sender] = _totalSupply;
     }
@@ -803,12 +812,10 @@ contract ERC20 is Context, IERC20 {
 
 
 
-pragma solidity 0.6.8;
+pragma solidity ^0.6.8;
 
-contract PixelDEFI is Ownable, ERC20 {
-    constructor(uint256 total) public Ownable() ERC20("PixelDEFI", "PXDF", total) {
-        _setupDecimals(6);
-    }
+contract VYNKCHAIN is Ownable, ERC20 {
+    constructor(uint256 total) public Ownable() ERC20("VYNK CHAIN", "VYNC", total, 4) {}
 
     function mint(address account, uint256 amount) external onlyOwner {
         _mint(account, amount);
@@ -817,19 +824,11 @@ contract PixelDEFI is Ownable, ERC20 {
     function burn(address account, uint256 amount) external onlyOwner {
         _burn(account, amount);
     }
-    
-    /**
-     * @notice Give the caller 10 TOKEN (10,000,000 units)
-     */
-    function gimmeSome() external {
-        _mint(msg.sender, 10e6);
-    }
-
 }
 
 
 
-pragma solidity 0.6.8;
+pragma solidity ^0.6.8;
 
 contract Migrations {
     address public owner;
